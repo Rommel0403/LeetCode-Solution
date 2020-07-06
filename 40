@@ -1,0 +1,28 @@
+
+class Solution {
+private:
+    vector<vector<int>> result;
+    vector<int> cand;
+public:
+    void cs(int start, int target, vector<int>&path){
+        vector<vector<int>> tmp;
+        vector<vector<int>> res;
+        for(auto current=(cand.begin()+start); current<cand.end() && (*current)<=target; current++){
+            if(current!=(cand.begin()+start) && *current == *(current-1)) 
+                continue;
+            path.push_back(*current);
+            if(*current==target)
+                result.push_back(path);
+            else
+                cs(current - cand.begin()+1, target-*current, path);
+            path.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        cand = candidates;
+        vector<int>path;
+        sort(cand.begin(), cand.end());
+        cs(0,target,path);
+        return result;
+    }
+};
