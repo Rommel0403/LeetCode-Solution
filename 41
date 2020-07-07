@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        vector<int> tmp;
+        int max = 0, min =1;
+        for(auto current:nums){
+            if(current > nums.size() || current <= 0)
+                continue;
+            if(current > max){
+                tmp.insert(tmp.end(),current-max,1);
+                *(tmp.end()-1) = 0;
+                max = current;
+            }
+            else
+                *(tmp.begin()+current-1) = 0;
+        }
+        for(auto iter = tmp.begin(); iter < tmp.end(); iter++)
+            if(*iter == 1)
+                return (iter-tmp.begin()+1);
+        return (tmp.end()-tmp.begin()+1);
+    }
+};
