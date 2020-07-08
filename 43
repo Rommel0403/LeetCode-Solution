@@ -1,0 +1,25 @@
+#include <algorithm>
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        string result;
+        int carry = 0;
+        if(num1=="0" || num2 == "0")
+            return "0";
+        for(int i = 0; i < num1.size() + num2.size() -1; i++){
+            int tmp = 0;
+            for(int j = (0<i-int(num2.size()-1))?i-int(num2.size()-1):0; j<=i && j<=num1.size()-1; j++){
+                int k = i - j;
+                tmp += (num1[num1.size()-1-j] - '0') * (num2[num2.size()-1-k] - '0');
+            }
+            tmp += carry;
+            carry = tmp/10;
+            result = char(tmp%10+'0') + result;
+        }
+        while(carry != 0){
+            result = char(carry%10+'0') + result;
+            carry = carry/10;
+        }
+        return result;
+    }
+};
