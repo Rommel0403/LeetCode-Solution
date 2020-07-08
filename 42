@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        long long int volume = 0, tmp_volume = 0, highest = 0;
+        if(height.empty())
+            return 0;
+        for(auto iter = height.begin(); iter < height.end(); iter++){
+            if(*iter >= highest){
+                highest = *iter;
+                tmp_volume = volume;
+            }            
+            else
+                volume += highest - *iter;
+        }
+        volume = tmp_volume;
+        highest = 0;
+        tmp_volume = 0;
+        for(auto iter = height.end()-1; iter >= height.begin(); iter--){
+            if(*iter > highest){
+                highest = *iter;
+                tmp_volume = volume;
+            }
+            else
+                volume += highest - *iter;
+        }
+        volume = tmp_volume;
+        return volume;
+    }
+};
