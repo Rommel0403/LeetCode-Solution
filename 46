@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> result;
+        sec_permute(nums,0,result);
+        return result;
+    }
+    void sec_permute(vector<int>nums, const int& start, vector<vector<int>> &result){
+        if(start == nums.size()-1){
+            result.push_back(nums);
+            return;
+        }
+        for (auto iter = nums.begin() + start; iter < nums.end(); iter++){
+            swap(nums[start],nums[iter-nums.begin()]);
+            //cout<<start<<" "<<nums[start]<<endl;
+            sec_permute(nums,start+1,result);
+        }
+        return;
+    }
+};
