@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> res;
+        sort(nums.begin(),nums.end());
+        sec_permute(nums, 0, result);
+        return result;
+    }
+    void sec_permute(vector<int> nums, const int& start, vector<vector<int>>& result){
+        if(start == nums.size()-1){
+            result.push_back(nums);
+            return;
+        }
+        sort(nums.begin()+start,nums.end());
+        for(int i = start; i < nums.size(); i++){
+            if(i!=start && nums[i] == nums[i-1])
+                continue;
+            swap(nums[start],nums[i]);
+            sec_permute(nums, start+1, result);
+            swap(nums[start],nums[i]);
+        }
+        return;  
+    }
+};
