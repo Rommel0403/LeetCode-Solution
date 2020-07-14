@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> result;
+        map<string, unsigned int> location;
+        for(auto iter = strs.begin(); iter < strs.end(); iter++){
+            string tmp = *iter;
+            sort((*iter).begin(),(*iter).end());
+            if(location[*iter] == 0){
+                location[*iter] = result.size()+1;
+                result.push_back({tmp});
+            }
+            else
+                result[location[*iter]-1].push_back(tmp);
+        }
+        return result;
+    }
+};
