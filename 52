@@ -1,0 +1,29 @@
+#include <cmath>
+int max(int x, int y){return (x>y)?x:y;}
+int min(int x, int y){return (x<y)?x:y;}
+int result = 0;
+class Solution {
+public:
+    int& totalNQueens(int n) {
+        result = 0;
+        vector<int>location;
+        recursion(n,0,location);
+        return result;
+    }
+    void recursion(const int& n,const int& current,vector<int>& location){
+        for(int i = 0; i < n; i++){
+            int flag = 0;
+            for(int j = 0; j < location.size() && flag ==0; j++)
+                flag += (location[j] == i) || (abs(j-current) == abs(location[j]-i));
+            if(flag==0){
+                if(current == n-1)
+                    result ++;
+                else{
+                    location.push_back(i);
+                    recursion(n,current+1,location);
+                    location.pop_back();
+                }
+            }
+        }
+    }
+};
