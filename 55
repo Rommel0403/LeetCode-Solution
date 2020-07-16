@@ -1,0 +1,23 @@
+int max(int& x, int& y){return x>y?x:y;}
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int current = 0, max_jump = 0, max_next_jump = 0, next_current = 0;
+        while(1){
+            max_jump = current + nums[current];
+            if(max_jump >= nums.size()-1)
+                return true;
+            if(nums[current] == 0)
+                return false;
+            max_next_jump = 0;
+            for(int i = current+1; i <= max_jump; i++){
+                if(nums[i] + i > max_next_jump){
+                    max_next_jump = nums[i] + i;
+                    next_current = i;
+                }
+            }
+            current = next_current;
+        }
+        return true;
+    }
+};
