@@ -1,0 +1,27 @@
+bool comp(vector<int>& interval1, vector<int>& interval2){
+    return interval1[0]<interval2[0];
+}
+int& max(int& x, int&y){
+    return x>y?x:y;
+}
+class Solution {
+private:
+vector<vector<int>> result;
+public:
+    vector<vector<int>>& merge(vector<vector<int>>& intervals) {
+        vector<int>curr(2,0);
+        sort(intervals.begin(), intervals.end(), comp);
+        if(intervals.empty())
+            return result;
+        curr = intervals[0];
+        result.push_back(curr);
+        for(auto iter = intervals.begin()+1; iter < intervals.end(); iter++){
+            curr = *(iter);
+            if(result[result.size()-1][1] < curr[0])
+                result.push_back(curr);
+            else
+                result[result.size()-1][1] = max(result[result.size()-1][1], curr[1]);
+        }
+        return result;
+    }
+};
