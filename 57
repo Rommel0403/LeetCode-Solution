@@ -1,0 +1,35 @@
+int& min(int& x, int& y){return x<y?x:y;}
+int& max(int& x, int& y){return x>y?x:y;}
+class Solution {
+private:
+    vector<vector<int>> result;
+public:
+    vector<vector<int>>& insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<int> newinsert(2,0);
+        if(intervals.empty()){
+            result.push_back(newInterval);
+            return result;
+        }
+        auto iter = intervals.begin();
+        while(iter<intervals.end() && (*iter)[1] < newInterval[0])
+            ++iter;
+        if(iter == intervals.end()){
+            intervals.push_back(newInterval);
+            return intervals;
+        }
+        else{
+            result.insert(result.end(), intervals.begin(), iter);
+            newinsert[0] = min(newInterval[0],(*iter)[0]);
+        }
+        while(iter<intervals.end() && (*iter)[0] <= newInterval[1])
+            iter++;
+        if(iter == intervals.begin())
+            result.push_back(newInterval);
+        else{
+            newinsert[1] = max((*(iter-1))[1],newInterval[1]);
+            result.push_back(newinsert);
+        }
+        result.insert(result.end(), iter, intervals.end());
+        return result;
+    }
+};
